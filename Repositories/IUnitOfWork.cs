@@ -6,5 +6,5 @@ public interface IUnitOfWork
 
     ICategoriaRepository CategoriaRepository { get; }
 
-    void Commit();
+    Task CommitAsync();
 }

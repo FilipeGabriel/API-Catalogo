@@ -108,3 +108,6 @@ E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\bin\D
 E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\bin\Debug\net8.0\Newtonsoft.Json.dll
 E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
 E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\obj\Debug\net8.0\APICatalogo.sourcelink.json
+E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\bin\Debug\net8.0\JetBrains.Annotations.dll
+E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\bin\Debug\net8.0\X.PagedList.dll
+E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\bin\Debug\net8.0\X.PagedList.Mvc.Core.dll
