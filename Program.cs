@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
+using APICatalogo.RateLimitOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -111,8 +114,40 @@ builder.Services.AddAuthorization(options =>
             claim.Type == "id" && claim.Value == "filipe") || context.User.IsInRole("SuperAdmin")));
 });
 
-builder.Services.AddScoped<ApiLoggingFilter>();
+var myOptions = new MyRateLimitOptions();
 
+builder.Configuration.GetSection(MyRateLimitOptions.MyRateLimit).Bind(myOptions);
+
+builder.Services.AddRateLimiter(rateLimiterOptions =>
+{
+    rateLimiterOptions.AddFixedWindowLimiter("fixedWindow", options =>
+    {
+        options.PermitLimit = myOptions.PermitLimit;
+        options.Window = TimeSpan.FromSeconds(myOptions.Window);
+        options.QueueLimit = myOptions.QueueLimit;
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+    });
+    rateLimiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+});
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+    
+        RateLimitPartition.GetFixedWindowLimiter(partitionKey: httpContext.User.Identity?.Name ?? httpContext.Request.Headers.Host.ToString(),
+                                                 factory: partition => new FixedWindowRateLimiterOptions
+                                                 {
+                                                     AutoReplenishment = true,
+                                                     PermitLimit = 1,
+                                                     QueueLimit = 2,
+                                                     Window = TimeSpan.FromSeconds(10)
+                                                 })
+    );
+});
+
+builder.Services.AddScoped<ApiLoggingFilter>();
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -139,6 +174,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseRateLimiter();
 
 app.UseCors();
 
