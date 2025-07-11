@@ -120,3 +120,7 @@ E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\obj\D
 E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\obj\Debug\net8.0\APICatalogo.genruntimeconfig.cache
 E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\obj\Debug\net8.0\ref\APICatalogo.dll
 E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\bin\Debug\net8.0\Asp.Versioning.Abstractions.dll
+E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\bin\Debug\net8.0\Asp.Versioning.Http.dll
+E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\bin\Debug\net8.0\Asp.Versioning.Mvc.dll
+E:\Programação\Cursos\C#\NET8\APICatalogoProjeto\APICatalogo\APICatalogo\bin\Debug\net8.0\Asp.Versioning.Mvc.ApiExplorer.dll
