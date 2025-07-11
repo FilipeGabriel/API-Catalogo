@@ -15,6 +15,8 @@ namespace APICatalogo.Controllers;
 [Route("[controller]")]
 [ApiController]
 [EnableRateLimiting("fixedWindow")]
+[Produces("application/json")]
+//[ApiExplorerSettings(IgnoreApi = true)]
 public class CategoriasController : ControllerBase
 {
     private readonly IUnitOfWork _uof;
@@ -26,6 +28,10 @@ public class CategoriasController : ControllerBase
         _logger = logger;
     }
 
+    /// <summary>
+    /// Obtem uma lista de Categorias
+    /// </summary>
+    /// <returns>Uma lista de objetos Categoria</returns>
     [HttpGet]
     [Authorize]
     public async Task<ActionResult<IEnumerable<CategoriaDTO>>> Get()
@@ -73,7 +79,14 @@ public class CategoriasController : ControllerBase
         return Ok(categoriasDto);
     }
 
+    /// <summary>
+    /// Obtem uma Categoria pelo id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>Objetos Categoria</returns>
     [HttpGet("{id:int}", Name = "ObterCategoria")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CategoriaDTO>> Get(int id)
     {
         var categoria = await _uof.CategoriaRepository.GetAsync(c => c.CategoriaId == id);
@@ -89,7 +102,26 @@ public class CategoriasController : ControllerBase
         return Ok(categoria);
     }
 
+    /// <summary>
+    /// Inclui uma nova Categoria
+    /// </summary>
+    /// <remarks>
+    /// Exemplo de request:
+    /// 
+    ///     POST api/categorias
+    ///     {
+    ///         "categoriaId": 1,
+    ///         "nome": "categoria1",
+    ///         "imagemUrl": "http://test.net/1.jpg"
+    ///     }
+    ///     
+    /// </remarks>
+    /// <param name="categoriaDto">objeto Categoria</param>
+    /// <returns>O objeto Categoria incluida</returns>
+    /// <remarks>Retorna um objeto Categoria incluído</remarks>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<CategoriaDTO>> Post(CategoriaDTO categoriaDto)
     {
         if (categoriaDto is null)
@@ -106,6 +138,7 @@ public class CategoriasController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Put))]
     public async Task<ActionResult<CategoriaDTO>> Put(int id, CategoriaDTO categoriaDto)
     {
         if (id != categoriaDto.CategoriaId)
