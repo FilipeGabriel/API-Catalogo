@@ -202,17 +202,20 @@ builder.Services.AddAutoMapper(typeof(ProdutoDTOMappingProfile));
 
 var app = builder.Build();
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    //app.UseSwaggerUI();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "APICatalogo");
-    });
-    app.ConfigureExceptionHandler();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    //app.UseSwagger();
+//    //app.UseSwaggerUI();
+//    app.UseSwaggerUI(c =>
+//    {
+//        c.SwaggerEndpoint("/swagger/v1/swagger.json", "APICatalogo");
+//    });
+//    app.ConfigureExceptionHandler();
+//}
 
 app.UseHttpsRedirection();
 
